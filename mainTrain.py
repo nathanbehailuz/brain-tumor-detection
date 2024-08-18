@@ -2,6 +2,7 @@ import cv2
 import os
 from PIL import Image
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 image_directory = "./dataset" 
 
@@ -27,9 +28,13 @@ def load_and_process_images(image_directory):
     process_images(no_tumor_images, 'no')
     process_images(yes_tumor_images, 'yes')
 
-    return dataset, label
+    return np.array(dataset), np.array(label)
 
 dataset, label = load_and_process_images(image_directory)
 
-print(len(label))
+# divide the dataset into train test and split 
+# 80% train, 20% test 
 
+x_train, x_test, y_train, y_test = train_test_split(dataset, label, test_size = 0.2 , random_state = 0)
+
+# Reshape = (n, image_width, image_height, n_channel)
