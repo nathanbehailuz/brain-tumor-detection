@@ -1,8 +1,11 @@
 import cv2
 import os
+import tensorflow as tf
+from tensorflow import keras
 from PIL import Image
 import numpy as np
 from sklearn.model_selection import train_test_split
+from keras.utils  import normalize 
 
 image_directory = "./dataset" 
 
@@ -37,4 +40,7 @@ dataset, label = load_and_process_images(image_directory)
 
 x_train, x_test, y_train, y_test = train_test_split(dataset, label, test_size = 0.2 , random_state = 0)
 
-# Reshape = (n, image_width, image_height, n_channel)
+# normalize the data
+x_train = normalize(x_train, axis = 1)
+x_test = normalize(x_test, axis = 1)
+
