@@ -78,4 +78,4 @@ model.fit(x_train, y_train,
           validation_data = (x_test, y_test),
           shuffle = False)
 
-model.save('BrainTumor10Epochs.h5')
+model.save('BrainTumor10Epochs.keras')
