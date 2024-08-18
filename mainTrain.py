@@ -5,7 +5,7 @@ from tensorflow import keras
 from PIL import Image
 import numpy as np
 from sklearn.model_selection import train_test_split
-from keras.utils  import normalize 
+from keras.utils  import normalize , to_categorical
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, Flatten, Dense 
 
@@ -47,6 +47,9 @@ x_train, x_test, y_train, y_test = train_test_split(dataset, label, test_size = 
 x_train = normalize(x_train, axis = 1)
 x_test = normalize(x_test, axis = 1)
 
+
+y_train = to_categorical(y_train,2)
+y_test = to_categorical(y_test,2)
 # model building 
 model = Sequential()
 
@@ -66,10 +69,10 @@ model.add(Flatten())
 model.add(Dense(64))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
+model.add(Dense(2))
+model.add(Activation('softmax'))
 
-model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
+model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
 
 model.fit(x_train, y_train, 
           batch_size = 16, 
@@ -78,4 +81,4 @@ model.fit(x_train, y_train,
           validation_data = (x_test, y_test),
           shuffle = False)
 
-model.save('BrainTumor10Epochs.keras')
+model.save('BrainTumor10EpochsCategorical.keras')
