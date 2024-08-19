@@ -7,6 +7,7 @@ numpy
 opt_einsum
 packaging
 pandas
+tensorflow
 pandocfilters
 pandas
 parso
